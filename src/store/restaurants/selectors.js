@@ -20,3 +20,17 @@ export const selectRestaurantsWithPizzas = (reduxState) => {
   console.log(pizzas);
   return restWithPizzas;
 };
+export const selectRestaurantsThatSellPizza = (pizzaId) => (reduxState) => {
+  return reduxState.restaurants.all.filter((r) => r.pizzas.includes(pizzaId));
+};
+
+export const selectPizzasSoldByRestaurant = (restaurantId) => (reduxState) => {
+  // get id's of pizzas sold
+  const restaurant = reduxState.restaurants.all.find(
+    (r) => r.id === restaurantId
+  );
+
+  const { allPizzas } = reduxState.pizzas;
+  // replace them with the actual objects from the all pizzas array
+  return restaurant.pizzas.map((pId) => allPizzas.find((p) => p.id === pId));
+};
